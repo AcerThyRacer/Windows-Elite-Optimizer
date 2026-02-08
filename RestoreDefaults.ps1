@@ -1,4 +1,4 @@
-<#
+﻿<#
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                     ⏪ RESTORE DEFAULTS — Windows 11                       ║
 ║                   Undo All Performance Optimizations                        ║

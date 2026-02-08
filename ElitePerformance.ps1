@@ -1,4 +1,4 @@
-<#
+﻿<#
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                    ⚡ ELITE PERFORMANCE — Windows 11                        ║
 ║                    Maximum Performance Power Plan                           ║
