@@ -18,32 +18,157 @@ A comprehensive suite of **23 PowerShell optimization scripts** covering everyth
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quick Start — Run Any Script
 
 ### Prerequisites
 - **Windows 11** (any edition)
 - **Administrator access** (scripts self-elevate automatically)
 - **PowerShell 5.1+** (included with Windows 11)
 
-### How to Run ANY Script
-
-```powershell
-# Step 1: Open PowerShell as Administrator
-#   → Press Win+X → "Terminal (Admin)" or "PowerShell (Admin)"
-
-# Step 2: Navigate to the scripts folder
-cd "C:\path\to\Windows-Elite-Optimizer"
-
-# Step 3: Allow script execution (one-time per session)
-Set-ExecutionPolicy Bypass -Scope Process -Force
-
-# Step 4: Run any script
-.\ScriptName.ps1
-```
-
-> **Alternative**: Right-click any `.ps1` file → **Run with PowerShell**. The script will auto-request admin privileges.
+> **Open PowerShell as Admin**: Press `Win+X` → **Terminal (Admin)** or **PowerShell (Admin)**
 
 > **🛡 Safety**: Scripts that modify system settings create a **System Restore Point** before making changes. You can always revert.
+
+---
+
+### ⚡ Performance
+
+```powershell
+# Elite Performance — Maximum power, all cores on, zero idle (desktops)
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\ElitePerformance.ps1
+```
+
+```powershell
+# Pro Performance — Balanced power, safe for laptops
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\ProPerformance.ps1
+```
+
+```powershell
+# Restore Defaults — Undo all Elite/Pro changes
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\RestoreDefaults.ps1
+```
+
+---
+
+### 🎮 Gaming
+
+```powershell
+# Game Booster — Kill bloat, boost game priority, auto-restore on exit
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\GameBooster.ps1
+```
+
+```powershell
+# Game Booster Lite — Quick pre-game boost, no monitoring
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\GameBoosterLite.ps1
+```
+
+```powershell
+# GPU Optimizer — NVIDIA/AMD auto-detect, per-setting control
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\GPUOptimizer.ps1
+```
+
+```powershell
+# GPU Optimizer Lite — Quick GPU fix, best settings applied instantly
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\GPUOptimizerLite.ps1
+```
+
+```powershell
+# Mouse Optimizer — 6-step input latency reduction, eDPI calculator
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\MouseOptimizer.ps1
+```
+
+```powershell
+# Mouse Optimizer Lite — Instant acceleration off + 1:1 speed
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\MouseOptimizerLite.ps1
+```
+
+```powershell
+# Latency Monitor — Real-time DPC/ISR monitoring + driver analysis
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\LatencyMonitor.ps1
+```
+
+```powershell
+# Latency Monitor Lite — Quick 15-second latency check
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\LatencyMonitorLite.ps1
+```
+
+---
+
+### 🌐 Network
+
+```powershell
+# Network Optimizer — Interactive 8-step network tuning
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\NetworkOptimizer.ps1
+```
+
+```powershell
+# Network Optimizer Recommended — Auto-apply best network settings
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\NetworkOptimizerRecommended.ps1
+```
+
+---
+
+### 🛡 Privacy & Updates
+
+```powershell
+# Privacy Lockdown — Full 10-category privacy hardening
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\PrivacyLockdown.ps1
+```
+
+```powershell
+# Privacy Lockdown Lite — Quick telemetry/ads/Cortana disable
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\PrivacyLockdownLite.ps1
+```
+
+```powershell
+# Windows Update Control — 7-category update management
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\WindowsUpdateControl.ps1
+```
+
+```powershell
+# Windows Update Control Lite — Quick update deferrals
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\WindowsUpdateControlLite.ps1
+```
+
+---
+
+### 🧹 Cleanup & Maintenance
+
+```powershell
+# Bloat Remover — Remove 60+ pre-installed Windows apps
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\BloatRemover.ps1
+```
+
+```powershell
+# Temp Cleaner — Deep temp/cache cleanup, shows space recovered
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\TempCleaner.ps1
+```
+
+```powershell
+# Startup Manager — Interactive startup optimizer with safety ratings
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\StartupManager.ps1
+```
+
+```powershell
+# Startup Manager Lite — Auto-disable known bloatware startups
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\StartupManagerLite.ps1
+```
+
+---
+
+### ☁ App Removal
+
+```powershell
+# Remove OneDrive — Complete wipe (⚠ IRREVERSIBLE)
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\RemoveOneDrive.ps1
+```
+
+```powershell
+# Remove Outlook — Complete wipe (⚠ IRREVERSIBLE)
+Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-Elite-Optimizer"; .\RemoveOutlook.ps1
+```
+
+> **💡 Custom install location?** Replace `$HOME\Downloads\Windows-Elite-Optimizer` with the path where you cloned/downloaded the repo.
 
 ---
 
