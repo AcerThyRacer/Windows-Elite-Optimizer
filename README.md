@@ -1,37 +1,20 @@
-# ⚡ Windows 11 Gamer Optimization Suite
+# ⚡ Windows Elite Optimizer
 
-> **Two tiers of power plan optimization scripts that unlock maximum performance from your Windows 11 machine.**
+> **23 PowerShell scripts that unlock maximum performance, privacy, and control from your Windows 11 machine.**
 
 ![Windows 11](https://img.shields.io/badge/Windows-11-0078D4?style=for-the-badge&logo=windows11&logoColor=white)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5171A5?style=for-the-badge&logo=powershell&logoColor=white)
+![Scripts](https://img.shields.io/badge/Scripts-23-orange?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
 ---
 
 ## 🎯 What Is This?
 
-This project provides **two custom PowerShell scripts** that create optimized power plans and apply deep OS-level tweaks to maximize your Windows 11 gaming performance. Every tweak is explained so you can **learn what's happening** and why it helps.
+A comprehensive suite of **23 PowerShell optimization scripts** covering everything from power plans and GPU tuning to privacy hardening and bloatware removal. Every script self-elevates to Administrator, creates restore points where applicable, and provides clear output on every change.
 
-| | ⚡ Elite | 🏆 Pro | 📦 Default Windows |
-|---|---|---|---|
-| **CPU Min State** | 100% (always max) | 5% (can idle) | 5% |
-| **Core Parking** | All cores ON | 50% min | 10-50% |
-| **CPU Idle States** | Disabled | Enabled | Enabled |
-| **Memory Compression** | OFF | ON | ON |
-| **Sleep** | Never | 30 min | 30 min |
-| **Display Timeout** | Never | 15 min | 5 min |
-| **Superfetch** | OFF | OFF | ON |
-| **Prefetch** | OFF | OFF | ON |
-| **Visual Effects** | All OFF | Reduced | All ON |
-| **Nagle's Algorithm** | OFF | OFF | ON |
-| **System Responsiveness** | 0% (100% to game) | 10% (90% to game) | 20% |
-| **Game DVR** | OFF | OFF | ON |
-| **Background Apps** | All OFF | User choice | All ON |
-| **Telemetry** | Disabled | Disabled | Full |
-| **Services Disabled** | 10 | 6 | 0 |
-| **System Timer** | Platform tick | Default | Default |
-| **NTFS Optimized** | Yes | Yes | No |
-| **Best For** | Desktop gaming rigs | Laptops & daily drivers | — |
+**Full scripts** = interactive menus with choices per setting.  
+**Lite scripts** = instant auto-apply of recommended settings, no prompts.
 
 ---
 
@@ -39,350 +22,742 @@ This project provides **two custom PowerShell scripts** that create optimized po
 
 ### Prerequisites
 - **Windows 11** (any edition)
-- **Administrator access** (scripts self-elevate)
+- **Administrator access** (scripts self-elevate automatically)
 - **PowerShell 5.1+** (included with Windows 11)
 
-### Run a Script
+### How to Run ANY Script
 
 ```powershell
-# Option 1: Right-click → Run with PowerShell
-# Option 2: From an elevated PowerShell terminal:
+# Step 1: Open PowerShell as Administrator
+#   → Press Win+X → "Terminal (Admin)" or "PowerShell (Admin)"
 
+# Step 2: Navigate to the scripts folder
+cd "C:\path\to\Windows-Elite-Optimizer"
+
+# Step 3: Allow script execution (one-time per session)
 Set-ExecutionPolicy Bypass -Scope Process -Force
-.\ElitePerformance.ps1    # For maximum performance
-# OR
-.\ProPerformance.ps1      # For balanced performance
+
+# Step 4: Run any script
+.\ScriptName.ps1
 ```
 
-### Undo Everything
+> **Alternative**: Right-click any `.ps1` file → **Run with PowerShell**. The script will auto-request admin privileges.
+
+> **🛡 Safety**: Scripts that modify system settings create a **System Restore Point** before making changes. You can always revert.
+
+---
+
+## 📁 Complete Script Reference
+
+| File | Type | Description |
+|---|---|---|
+| `ElitePerformance.ps1` | ⚡ Full | Aggressive max-performance preset for dedicated gaming desktops |
+| `ProPerformance.ps1` | ⚡ Full | Balanced high-performance preset, safe for laptops |
+| `RestoreDefaults.ps1` | 🔄 Restore | Completely reverses all Elite/Pro changes |
+| `RemoveOneDrive.ps1` | ☁ Removal | Full OneDrive wipe — app, folders, registry, sidebar |
+| `RemoveOutlook.ps1` | 📧 Removal | Full Outlook wipe — UWP, classic, cache, telemetry |
+| `TempCleaner.ps1` | 🧹 Full | Deep temp/cache cleanup with space recovery report |
+| `StartupManager.ps1` | 🚀 Full | Interactive startup optimizer with safety ratings |
+| `StartupManagerLite.ps1` | 🚀 Lite | Auto-disable known bloatware startups |
+| `PrivacyLockdown.ps1` | 🛡 Full | 10-category privacy hardening + hosts file blocking |
+| `PrivacyLockdownLite.ps1` | 🛡 Lite | Quick telemetry/ads/Cortana disable |
+| `WindowsUpdateControl.ps1` | 🔄 Full | 7-category update control with deferrals |
+| `WindowsUpdateControlLite.ps1` | 🔄 Lite | Quick update deferrals + no auto-restart |
+| `GameBooster.ps1` | 🎮 Full | Per-game performance mode with auto-restore |
+| `GameBoosterLite.ps1` | 🎮 Lite | Quick pre-game boost, no monitoring |
+| `NetworkOptimizer.ps1` | 🌐 Full | 8-step interactive network tuning |
+| `NetworkOptimizerRecommended.ps1` | 🌐 Lite | Auto-apply best network settings |
+| `BloatRemover.ps1` | 🧹 Full | Remove 60+ bloatware apps by category |
+| `MouseOptimizer.ps1` | 🖱 Full | 6-step mouse input latency reduction |
+| `MouseOptimizerLite.ps1` | 🖱 Lite | Instant acceleration off + 1:1 speed |
+| `GPUOptimizer.ps1` | 🖥 Full | Per-GPU tuning — NVIDIA/AMD auto-detect |
+| `GPUOptimizerLite.ps1` | 🖥 Lite | Quick GPU fix with vendor detection |
+| `LatencyMonitor.ps1` | ⏱ Full | DPC/ISR monitoring + driver analysis |
+| `LatencyMonitorLite.ps1` | ⏱ Lite | Quick 15-second latency check |
+
+---
+
+## 📖 Detailed Script Documentation
+
+### ⚡ ElitePerformance.ps1 — Maximum Performance Preset
+
+**What it does**: Creates a custom power plan based on Ultimate Performance, disables CPU idle states, parks zero cores, forces 100% min processor state, disables Superfetch/Prefetch, turns off memory compression, disables Nagle's algorithm, kills background telemetry, disables all visual effects, and optimizes NTFS settings.
+
+**Best for**: Dedicated gaming desktops with good cooling.
 
 ```powershell
-.\RestoreDefaults.ps1
+# Run the script
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\ElitePerformance.ps1
+
+# What you'll see:
+#   ✓ System Restore point created
+#   ✓ "Elite Performance" power plan created and activated
+#   ✓ CPU set to 100% min state, all cores unparked
+#   ✓ CPU idle states disabled
+#   ✓ Memory compression OFF, Superfetch OFF, Prefetch OFF
+#   ✓ Nagle's algorithm disabled on all adapters
+#   ✓ Win32PrioritySeparation set to 0x26 (3x foreground boost)
+#   ✓ 10 background services disabled
+#   ✓ All visual effects disabled
+#   ✓ Telemetry + Cortana + Advertising ID disabled
+#   ✓ NTFS 8.3 names disabled, last access time off
 ```
 
-> **🛡 Safety**: Every script creates a **System Restore Point** before making changes. You can always revert from Windows System Restore.
+**Verify it worked:**
+```powershell
+# Check power plan is active
+powercfg /list
+# You should see "Elite Performance *" (asterisk = active)
+
+# Check services
+Get-Service SysMain, DiagTrack | Format-Table Name, Status
+# Both should show "Stopped"
+```
 
 ---
 
-## 📁 Files
+### ⚡ ProPerformance.ps1 — Balanced Performance Preset
 
-| File | Description |
-|---|---|
-| `ElitePerformance.ps1` | Aggressive maximum-performance preset. Best for dedicated gaming desktops. |
-| `ProPerformance.ps1` | Balanced high-performance preset. Safe for laptops and all-purpose machines. |
-| `RestoreDefaults.ps1` | Completely reverses all changes from either script. |
-| `RemoveOneDrive.ps1` | ☁ Fully wipes Microsoft OneDrive — app, folders, registry, sidebar, context menus. |
-| `RemoveOutlook.ps1` | 📧 Fully wipes Microsoft Outlook — UWP, classic, cache, telemetry, protocol handlers. |
-| `TempCleaner.ps1` | 🧹 Deep temp/cache cleanup — browsers, shaders, Windows Update, thumbnails. Shows space recovered. |
-| `StartupManager.ps1` | 🚀 Full interactive startup optimizer — safety ratings, toggle on/off, auto-disable bloat. |
-| `StartupManagerLite.ps1` | 🚀 Quick auto-optimizer — instantly disables known bloatware, no menu needed. |
-| `PrivacyLockdown.ps1` | 🛡 Full privacy hardening — telemetry, tracking, hosts file, camera/mic, Cortana/Copilot. |
-| `PrivacyLockdownLite.ps1` | 🛡 Quick privacy — telemetry, ads, Cortana off. Keeps location/clipboard/camera. |
-| `WindowsUpdateControl.ps1` | 🔄 Full update control — active hours, deferrals, no auto-restart, no P2P, no driver WU. |
-| `WindowsUpdateControlLite.ps1` | 🔄 Quick update control — defer features 30d, quality 7d, no auto-restart, no P2P. |
-| `GameBooster.ps1` | 🎮 Per-game performance mode — kill bloat, boost priority, flush RAM, auto-restore on exit. |
-| `GameBoosterLite.ps1` | 🎮 Quick pre-game boost — kill bloat, flush RAM/DNS, power plan switch. Run & go. |
-| `NetworkOptimizer.ps1` | 🌐 Interactive network tuning — DNS, TCP, MTU testing, adapter optimizations, latency test. |
-| `NetworkOptimizerRecommended.ps1` | 🌐 Auto-apply recommended network settings — Cloudflare DNS, Nagle off, throttle removed. |
-| `BloatRemover.ps1` | 🧹 Windows 11 app cleanup — 60+ bloatware, 8 categories, interactive or bulk remove. |
-| `MouseOptimizer.ps1` | 🖱 Interactive mouse tuning — acceleration, pointer speed, raw input, USB polling, eDPI calculator. |
-| `MouseOptimizerLite.ps1` | 🖱 Quick mouse fix — acceleration off, 6/11 speed, trails off, USB optimized. |
-| `GPUOptimizer.ps1` | 🖥 Per-GPU tuning — NVIDIA/AMD auto-detect, vendor tweaks, MPO, HAGS, FSO, Game DVR. |
-| `GPUOptimizerLite.ps1` | 🖥 Quick GPU fix — auto-detect vendor, apply best settings, disable MPO/DVR. |
-| `LatencyMonitor.ps1` | ⏱ DPC/ISR latency checker — real-time monitoring, 30+ driver database, network test. |
-| `LatencyMonitorLite.ps1` | ⏱ Quick 15s latency check — DPC/ISR monitoring, auto driver scan. |
+**What it does**: Same optimizations as Elite but with safety margins — CPU can idle to save power, keeps some visual effects for readability, preserves sleep/display timeout, and disables 6 services instead of 10.
 
----
+**Best for**: Laptops, daily-driver PCs, and mixed-use machines.
 
-## 📖 Understanding Every Optimization
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\ProPerformance.ps1
 
-### ⚡ Power Plan (Steps 1-2)
+# What you'll see:
+#   ✓ "Pro Performance" power plan created (based on High Performance)
+#   ✓ CPU min state 5% (can idle), core parking 50% min
+#   ✓ Sleep: 30 min, Display: 15 min
+#   ✓ Superfetch OFF, Prefetch OFF
+#   ✓ Nagle's algorithm disabled
+#   ✓ 6 background services disabled
+#   ✓ Reduced visual effects (keeps ClearType + smooth scrolling)
+#   ✓ Telemetry disabled
+```
 
-**What**: Creates a custom power plan based on the hidden "Ultimate Performance" plan (Elite) or "High Performance" plan (Pro).
-
-**Why it helps**: Windows' default "Balanced" plan aggressively downclocks your CPU and parks cores to save power. This adds **5-15ms of latency** every time your CPU needs to ramp up from idle — which happens constantly during gaming.
-
-| Setting | What it does | Impact |
-|---|---|---|
-| **Min Processor State 100%** | CPU never downclocks below max frequency | Eliminates ramp-up latency |
-| **Core Parking 100%** | All CPU cores stay active | No delay unparking cores |
-| **Boost Mode Aggressive** | CPU turbo boosts harder and sustains longer | Higher sustained clock speeds |
-| **Idle Disabled** (Elite) | CPU never enters C-states | Zero transition latency |
-| **USB Suspend Off** | USB devices never sleep | No mouse/keyboard reconnection delays |
-| **PCIe Link State Off** | PCIe bus always at full bandwidth | GPU/NVMe never throttled |
-
----
-
-### 🎮 GPU & Display (Step 3)
-
-**What**: Forces the GPU to maximum performance mode and disables fullscreen optimizations.
-
-**Why it helps**: Windows' "Fullscreen Optimizations" (FSO) adds a composition layer between your game and the display. Disabling FSO gives you **true exclusive fullscreen** with lower input latency.
-
-| Setting | What it does |
-|---|---|
-| **GPU Preference → High** | Always use discrete GPU at max performance |
-| **HAGS Off** (Elite only) | CPU controls GPU queue directly — lower input latency |
-| **FSO Disabled** | True exclusive fullscreen — bypasses DWM compositor |
-
----
-
-### 🧠 Memory & Cache (Step 4)
-
-**What**: Disables background memory management features that waste CPU cycles.
-
-**Why it helps**: Superfetch pre-loads applications into RAM based on usage patterns. This causes random I/O spikes during gaming. On an SSD, the startup time difference is negligible, so pre-loading is pointless.
-
-| Setting | What it does | Impact |
-|---|---|---|
-| **Memory Compression Off** (Elite) | Stops CPU from compressing memory pages | Frees 1-3% CPU |
-| **Superfetch Off** | No background app pre-loading | Less random I/O |
-| **Prefetch Off** | No anticipatory disk reads | Smoother frame times |
-| **Large System Cache → Programs** | More RAM for apps, less for file cache | Better for gaming |
-
----
-
-### 🌐 Network (Step 5)
-
-**What**: Disables TCP optimizations that add latency for the sake of throughput.
-
-**Why it helps**: **Nagle's Algorithm** batches small TCP packets together, adding **5-40ms of latency** to every network call. It was designed for 1990s networks. Disabling it sends each packet immediately — critical for online gaming.
-
-| Setting | What it does | Impact |
-|---|---|---|
-| **Nagle Off** (`TCPNoDelay=1`) | Packets sent immediately | 5-40ms less network latency |
-| **TCP Ack Frequency = 1** | Acknowledge every packet immediately | Better hit registration |
-| **Network Throttling Off** | Remove bandwidth reservation | Full bandwidth for games |
-
----
-
-### ⏱ Scheduler & Timer (Step 6)
-
-**What**: Reconfigures how Windows distributes CPU time between applications.
-
-**Why it helps**: `Win32PrioritySeparation` is the most impactful single registry tweak for gaming. Setting it to `0x26` (38 decimal) gives the foreground window **3x more CPU time slices** than any background process.
-
-| Setting | Value | Effect |
-|---|---|---|
-| `Win32PrioritySeparation` | 38 (0x26) | Short, variable quantum, 3x foreground boost |
-| `SystemResponsiveness` | 0 (Elite) / 10 (Pro) | How much CPU is reserved for background |
-| `GPU Priority` | 8 | Maximum GPU time for games |
-| Platform Tick (Elite) | Enabled | Consistent timer resolution — less jitter |
-
----
-
-### 🔇 Services (Step 7)
-
-**What**: Disables Windows services that run in the background and consume resources.
-
-**Why it helps**: Each service uses CPU, RAM, and sometimes disk I/O. The services we disable are genuinely unnecessary for gaming (Fax, Maps, AllJoyn IoT). Telemetry services in particular can cause frame drops during their upload cycles.
-
-<details>
-<summary>📋 Full Service List (click to expand)</summary>
-
-| Service | Description | Elite | Pro |
+| | ⚡ Elite | 🏆 Pro | 📦 Default Windows |
 |---|---|---|---|
-| SysMain | Superfetch — pre-loads apps | ❌ | ❌ |
-| DiagTrack | Telemetry — sends data to MS | ❌ | ❌ |
-| WSearch | Windows Search Indexer | ❌ | ✅ |
-| MapsBroker | Offline Maps Manager | ❌ | ❌ |
-| Fax | Windows Fax | ❌ | ❌ |
-| TabletInputService | Touch Keyboard | ❌ | ✅ |
-| RetailDemo | Store demo mode | ❌ | ❌ |
-| WMPNetworkSvc | WMP network sharing | ❌ | ✅ |
-| AJRouter | AllJoyn IoT router | ❌ | ✅ |
-| dmwappushservice | WAP Push Messages | ❌ | ❌ |
-
-</details>
+| **CPU Min State** | 100% (always max) | 5% (can idle) | 5% |
+| **Core Parking** | All cores ON | 50% min | 10-50% |
+| **Memory Compression** | OFF | ON | ON |
+| **Sleep** | Never | 30 min | 30 min |
+| **Visual Effects** | All OFF | Reduced | All ON |
+| **Services Disabled** | 10 | 6 | 0 |
 
 ---
 
-### 👁 Visual Effects (Step 8)
+### 🔄 RestoreDefaults.ps1 — Undo Everything
 
-**What**: Disables Windows animations, transparency, and desktop effects.
-
-**Why it helps**: Every animation (window fade, taskbar slide, menu glow) consumes GPU cycles. The transparency/blur ("Acrylic") effect in particular uses significant GPU compute. Disabling these frees GPU resources for your games.
-
-- **Elite**: Disables ALL visual effects for maximum performance
-- **Pro**: Keeps ClearType font smoothing and smooth scrolling for readability
-
----
-
-### 🚫 Telemetry (Step 9)
-
-**What**: Disables Windows diagnostic data collection, Cortana, activity tracking, and advertising features.
-
-**Why it helps**: Telemetry services periodically collect and upload system data. These uploads can coincide with gaming sessions, causing network latency spikes and CPU usage. Disabling them also improves privacy.
-
----
-
-## 🔬 The Telemetry Problem — Why It Kills Performance
-
-Windows 11 ships with **extensive telemetry** — background services that continuously collect, process, and upload data about your system, your usage patterns, your hardware, your installed apps, and more. Microsoft calls it "diagnostic data," but for gamers, it's a silent performance killer.
-
-### How Telemetry Hurts Your FPS
-
-| Resource | What Telemetry Does | Gaming Impact |
-|---|---|---|
-| **CPU** | `DiagTrack` and `dmwappushservice` periodically wake up to collect system events, crash dumps, and usage data. These collection cycles spike CPU usage by 2-8% unpredictably. | **Micro-stutters and frame drops** during collection cycles. You'll see random 1% low FPS dips that coincide with telemetry bursts. |
-| **Disk I/O** | Telemetry writes event logs to `C:\ProgramData\Microsoft\Diagnosis`, creates ETW trace files, and journals everything to disk. On HDDs this is catastrophic; on SSDs it still competes for I/O bandwidth. | **Longer load times and texture streaming hitches.** Games that stream assets from disk (open world games) stutter when telemetry is writing. |
-| **Network** | Collected data is uploaded to Microsoft servers (`settings-win.data.microsoft.com`, `vortex.data.microsoft.com`, etc.) in periodic bursts. These uploads can saturate your connection for 2-5 seconds. | **Ping spikes of 50-200ms** during uploads. Devastating for competitive multiplayer. |
-| **RAM** | Telemetry services keep ~50-150MB of resident memory at all times for caching collected data. | **Less RAM for game textures**, especially on 8-16GB systems. |
-| **Timers** | ETW (Event Tracing for Windows) sessions used by telemetry create high-frequency timer interrupts that interfere with your game's frame pacing. | **Inconsistent frame times** — even if average FPS looks fine, the frame-to-frame consistency suffers. |
-
-### What Our Scripts Disable
-
-Both the **Elite** and **Pro** scripts disable:
-- `DiagTrack` service (Connected User Experiences and Telemetry)
-- `dmwappushservice` (WAP Push Message Routing)
-- Windows Telemetry data collection (registry)
-- Customer Experience Improvement Program (CEIP)
-- Activity History tracking and uploading
-- Advertising ID tracking
-- Cortana data collection
-
-### Going Further: The Raphire Windows Debloat Tool
-
-For users who want an **even deeper debloat** beyond what our scripts handle, there's a well-known community tool:
+**What it does**: Completely reverses all changes made by ElitePerformance or ProPerformance — removes custom power plans, re-enables services, restores visual effects, re-enables Superfetch/Prefetch, and restores default registry values.
 
 ```powershell
-& ([scriptblock]::Create((irm "https://debloat.raphi.re/")))
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\RestoreDefaults.ps1
+
+# What you'll see:
+#   ✓ Custom power plans removed
+#   ✓ "Balanced" plan re-activated
+#   ✓ All 10 services re-enabled and started
+#   ✓ Visual effects restored to default
+#   ✓ Memory compression ON
+#   ✓ Superfetch/Prefetch ON
+#   ✓ Nagle's algorithm re-enabled
+#   ✓ NTFS settings restored
 ```
 
-> [!CAUTION]
-> **This downloads and executes a remote script directly from the internet.** While this tool is well-known in the Windows optimization community and is open-source, you are running code that you did not write and cannot verify at execution time. **Always review the source code first** at the project's repository before running it.
-
-> [!WARNING]
-> **The debloat tool is MUCH more aggressive than our scripts.** It can remove Windows Store apps, disable Windows Update components, strip Microsoft Edge, and make changes that are **very difficult to reverse**. Some changes may break Windows features you depend on. **Only use this if you know exactly what you're doing.**
-
-> [!IMPORTANT]
-> **Create a full system image backup (not just a restore point) before running any third-party debloat tool.** Tools like Macrium Reflect Free or Windows' built-in system image backup can save your entire disk state. A restore point alone may not be sufficient to undo all changes made by aggressive debloat scripts.
-
-What the debloat tool can do beyond our scripts:
-- Remove pre-installed Windows Store apps (Clipchamp, Teams, News, etc.)
-- Disable Windows Update entirely (not recommended for security)
-- Remove Microsoft Edge completely
-- Strip Widgets, Copilot, and AI features
-- Disable additional background services
-
 ---
-
-## 🧹 Bloatware Removal Scripts
-
-In addition to the power plan optimization scripts, we provide dedicated removal scripts for two of the biggest background offenders on Windows 11.
 
 ### ☁ RemoveOneDrive.ps1 — Complete OneDrive Wipe
 
-OneDrive runs constantly in the background, syncing files, updating icons, and consuming CPU/disk/network resources — even when you're not actively using it.
+**What it does**: Fully removes Microsoft OneDrive — the application, all hidden data folders (9 locations), Explorer sidebar integration, context menus, icon overlays, startup entries, and blocks reinstallation via Group Policy.
 
-> [!CAUTION]
-> **This is IRREVERSIBLE.** OneDrive cannot be easily reinstalled after a full wipe. Your locally synced files will remain on disk, but cloud sync is permanently removed. **Back up your OneDrive folder before running this.**
-
-What it removes:
-| Component | Details |
-|---|---|
-| **Application** | Uninstalls via winget and OneDriveSetup.exe |
-| **Hidden Folders** | `%LOCALAPPDATA%\Microsoft\OneDrive`, `%APPDATA%\Microsoft\OneDrive`, `%PROGRAMDATA%\Microsoft OneDrive`, UWP package data, temp files — **9 locations total** |
-| **Explorer Integration** | Sidebar entry, navigation pane, context menus ("Share with OneDrive"), icon overlay handlers (sync status badges) |
-| **Registry** | Startup entries, namespace keys, CLSID entries, environment variables |
-| **Scheduled Tasks** | All OneDrive scheduled tasks |
-| **Reinstallation** | Blocked via Group Policy (`DisableFileSyncNGSC`) |
+> **⚠ IRREVERSIBLE** — Back up your OneDrive folder first. Cloud sync cannot be restored after this.
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
 .\RemoveOneDrive.ps1
+
+# What you'll see:
+#   ✓ OneDrive process killed
+#   ✓ Application uninstalled (winget + OneDriveSetup.exe /uninstall)
+#   ✓ 9 hidden data folders removed
+#   ✓ Explorer sidebar entry removed
+#   ✓ Context menu entries removed ("Share with OneDrive")
+#   ✓ Sync icon overlays removed
+#   ✓ Scheduled tasks removed
+#   ✓ Reinstallation blocked via Group Policy
 ```
+
+---
 
 ### 📧 RemoveOutlook.ps1 — Complete Outlook Wipe
 
-The new Windows 11 Outlook app runs background sync processes, sends telemetry, and keeps network connections open at all times — even when minimized.
+**What it does**: Removes both the new UWP Outlook and classic Office Outlook — application packages, email profiles, PST/OST files, offline cache, telemetry logs, protocol handlers (`mailto:`, `outlook:`), and blocks reinstallation.
 
-> [!CAUTION]
-> **Export your emails, contacts, and calendar data BEFORE running this.** All Outlook data including PST/OST files, offline cache, and email profiles will be permanently deleted.
-
-What it removes:
-| Component | Details |
-|---|---|
-| **New Outlook** | UWP/MSIX packages, provisioned packages (blocks new-user install) |
-| **Classic Outlook** | Office 16.0 profiles, registry entries, protocol handlers (`mailto:`, `outlook:`) |
-| **Hidden Data** | `%LOCALAPPDATA%\Microsoft\Olk`, `%LOCALAPPDATA%\Microsoft\Outlook`, Windows Communications Apps package, offline cache, telemetry logs — **12+ locations** |
-| **Scheduled Tasks** | OfficeTelemetry and Outlook-specific tasks |
-| **Reinstallation** | Blocked via policy, silent app install disabled |
+> **⚠ IRREVERSIBLE** — Export your emails, contacts, and calendar data BEFORE running this.
 
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
 .\RemoveOutlook.ps1
+
+# What you'll see:
+#   ✓ Outlook processes killed
+#   ✓ New Outlook UWP package removed
+#   ✓ Classic Outlook profiles cleared
+#   ✓ 12+ data locations wiped
+#   ✓ Protocol handlers removed
+#   ✓ Telemetry tasks removed
+#   ✓ Silent reinstall blocked
 ```
 
 ---
 
-## 🛡 Advanced: Network-Level Telemetry Blocking with Safing Portmaster
+### 🧹 TempCleaner.ps1 — Deep Temp & Cache Cleanup
 
-Even after disabling telemetry via registry and services, **Windows can still phone home** through other system components, Edge WebView processes, and Windows Update connections. For users who want to block telemetry **at the network level**, we recommend:
+**What it does**: Scans and cleans temporary files from 20+ locations — Windows Temp, User Temp, browser caches (Chrome/Firefox/Edge), shader caches (NVIDIA/AMD/DirectX), Windows Update cache, thumbnail cache, prefetch data, and Recycle Bin. Shows total space recovered.
 
-### [Safing Portmaster](https://safing.io/) — Free, Open Source
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\TempCleaner.ps1
 
-Portmaster is a free, open-source application firewall that monitors and controls all network traffic on your PC. It can:
-
-- **Block all telemetry domains** — Prevents `vortex.data.microsoft.com`, `settings-win.data.microsoft.com`, `watson.telemetry.microsoft.com`, and hundreds more from ever being contacted
-- **Show you exactly what's phoning home** — See every connection every app makes in real-time
-- **Block per-application** — Allow your game's network traffic while blocking Edge's telemetry, for example
-- **Use community filter lists** — Similar to ad blockers, but for your entire system
-- **DNS-level privacy** — Built-in DNS-over-TLS/HTTPS with configurable upstream resolvers
-
-> [!WARNING]
-> **Portmaster acts as a system firewall.** Misconfiguring it can block legitimate connections including game servers, Discord, Steam, Windows Update, and more. If you experience connectivity issues after installing it, check Portmaster's connection log first.
-
-> [!WARNING]
-> **Some games with aggressive anti-cheat** (Vanguard, EasyAntiCheat, BattlEye) may conflict with Portmaster's network filtering driver. If you experience issues launching games with kernel-level anti-cheat, you may need to add exceptions or temporarily disable Portmaster.
-
-> [!IMPORTANT]
-> **Do not blindly block all Microsoft domains.** Some are required for Windows activation, Store purchases, and game license verification (Xbox/Game Pass). Portmaster's default filter lists are generally safe, but custom rules should be tested carefully.
-
-**Install**: Download from [https://safing.io/](https://safing.io/) — No account required.
-
-| Feature | Portmaster | Windows Firewall |
-|---|---|---|
-| Block telemetry domains | ✅ Hundreds of domains | ❌ Manual IP rules only |
-| See all connections | ✅ Real-time dashboard | ❌ Basic log only |
-| Per-app rules | ✅ Easy GUI | ⚠️ Complex rules |
-| DNS privacy | ✅ Built-in DoT/DoH | ❌ Not available |
-| Open source | ✅ Fully open | ⚠️ Closed source |
-| Price | Free | Free |
+# What you'll see:
+#   📊 Pre-scan showing current sizes of each cache
+#   ✓ Windows temp files cleaned
+#   ✓ User temp files cleaned
+#   ✓ Browser caches cleaned (Chrome, Firefox, Edge)
+#   ✓ GPU shader caches cleaned (NVIDIA, AMD, DirectX)
+#   ✓ Windows Update cache cleaned
+#   ✓ Thumbnail cache purged
+#   ✓ Prefetch files cleaned
+#   ✓ Recycle Bin emptied
+#   📊 Summary: "Recovered X.XX GB of disk space"
+```
 
 ---
 
-### 💾 NTFS Filesystem (Step 10)
+### 🚀 StartupManager.ps1 — Interactive Startup Optimizer
 
-**What**: Optimizes NTFS volume settings.
+**What it does**: Scans all startup programs (registry + startup folders), displays them with safety ratings (🟢 Safe to disable, 🟡 Caution, 🔴 Do not disable), and lets you toggle individual items on/off. Also has an auto-disable mode for known bloatware.
 
-| Setting | What it does | Impact |
-|---|---|---|
-| **Disable 8.3 Names** | Stops generating DOS-compatible filenames | ~20% faster file creation |
-| **Disable Last Access Time** | Stops updating access timestamps on reads | Less disk writes |
-| **High Memory Usage** | Caches more filesystem metadata in RAM | Faster directory traversal |
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\StartupManager.ps1
+
+# Interactive menu:
+#   [1] View all startup items with safety ratings
+#   [2] Toggle specific items on/off
+#   [3] Auto-disable known bloatware
+#   [4] Show currently disabled items
+#   [Q] Quit
+
+# Example output:
+#   [1] 🟢 Microsoft Teams          ENABLED   → Safe to disable
+#   [2] 🟢 Spotify                  ENABLED   → Safe to disable
+#   [3] 🟢 Discord Update           ENABLED   → Safe to disable
+#   [4] 🔴 NVIDIA Display Driver    ENABLED   → Do NOT disable
+#   [5] 🟡 Realtek Audio            ENABLED   → Caution
+```
+
+### 🚀 StartupManagerLite.ps1 — Quick Startup Fix
+
+**What it does**: Instantly disables 20+ known bloatware startup entries (Teams, Spotify, Discord updater, Adobe Creative Cloud, OneDrive, Skype, etc.) without showing a menu.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\StartupManagerLite.ps1
+
+# What you'll see:
+#   ✓ Microsoft Teams — disabled
+#   ✓ Spotify — disabled
+#   ✓ Discord Update — disabled
+#   ✓ Adobe Creative Cloud — disabled
+#   ... (20+ items)
+#   ✅ Disabled X startup items
+```
+
+---
+
+### 🛡 PrivacyLockdown.ps1 — Full Privacy Hardening
+
+**What it does**: Disables telemetry (10 categories), blocks 40+ tracking domains via hosts file, disables activity history, clipboard sync, location tracking, camera/mic background access, Find My Device, Advertising ID, Cortana/Copilot, typing/inking data, and feedback notifications. Creates a restore point.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\PrivacyLockdown.ps1
+
+# What you'll see (10 categories):
+#   ✓ [1/10] Telemetry — AllowTelemetry=0, DiagTrack stopped
+#   ✓ [2/10] Activity History — disabled, upload blocked
+#   ✓ [3/10] Clipboard — cloud sync disabled
+#   ✓ [4/10] Location — background access blocked
+#   ✓ [5/10] Camera/Mic — background access blocked
+#   ✓ [6/10] Find My Device — disabled
+#   ✓ [7/10] Advertising ID — reset and disabled
+#   ✓ [8/10] Cortana/Copilot — fully disabled
+#   ✓ [9/10] Typing/Inking — data collection off
+#   ✓ [10/10] Hosts File — 40+ tracking domains blocked
+#   ✅ Privacy hardening complete — 10 categories applied
+```
+
+### 🛡 PrivacyLockdownLite.ps1 — Quick Privacy Fix
+
+**What it does**: Applies the 5 most impactful privacy settings — telemetry off, advertising ID disabled, Cortana/Copilot off, activity history off, feedback notifications off. Does NOT modify hosts file or block camera/location.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\PrivacyLockdownLite.ps1
+
+# What you'll see:
+#   ✓ Telemetry disabled
+#   ✓ Advertising ID disabled
+#   ✓ Cortana/Copilot disabled
+#   ✓ Activity history disabled
+#   ✓ Feedback notifications off
+#   ✅ Quick privacy applied — 5 categories
+```
+
+---
+
+### 🔄 WindowsUpdateControl.ps1 — Full Update Control
+
+**What it does**: Configures Windows Update behavior across 7 categories — sets active hours (10 AM–2 AM), defers feature updates 30 days, defers quality updates 7 days, disables auto-restart, blocks P2P delivery optimization, excludes driver updates from WU, and suppresses notifications. Creates a restore point.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\WindowsUpdateControl.ps1
+
+# What you'll see:
+#   ✓ System restore point created
+#   ✓ Active hours set (10:00 AM → 2:00 AM)
+#   ✓ Feature updates deferred 30 days
+#   ✓ Quality updates deferred 7 days
+#   ✓ Auto-restart blocked during active hours
+#   ✓ P2P delivery optimization disabled
+#   ✓ Driver updates excluded from WU
+#   ✓ Update notifications suppressed
+#   ✅ 7 update policies configured
+```
+
+### 🔄 WindowsUpdateControlLite.ps1 — Quick Update Control
+
+**What it does**: Defers feature updates 30 days, quality updates 7 days, blocks auto-restart, and disables P2P delivery optimization. Does not change active hours or driver settings.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\WindowsUpdateControlLite.ps1
+
+# What you'll see:
+#   ✓ Feature updates deferred 30 days
+#   ✓ Quality updates deferred 7 days
+#   ✓ Auto-restart blocked
+#   ✓ P2P delivery optimization off
+#   ✅ 4 update settings applied
+```
+
+---
+
+### 🎮 GameBooster.ps1 — Per-Game Performance Mode
+
+**What it does**: Clears standby memory, kills 24 bloatware processes, pauses 4 heavy services (SysMain, WSearch, DiagTrack, WU), flushes DNS/ARP/Winsock, disables Nagle, switches to Ultimate Performance power plan, sets GPU scheduling priority, and optionally monitors a game process to boost its priority and CPU affinity. **Automatically restores everything when the game exits.**
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\GameBooster.ps1
+
+# Phase 1 — System Prep (automatic):
+#   ✓ Standby memory cleared (freed X MB)
+#   ✓ Killed: Edge, Teams, Spotify, Discord updaters, OneDrive...
+#   ✓ Paused: SysMain, WSearch, DiagTrack, Windows Update
+#   ✓ DNS/ARP flushed, Winsock reset, Nagle disabled
+#   ✓ Power plan → Ultimate Performance
+#   ✓ GPU scheduling priority → High
+
+# Phase 2 — Game Monitor (interactive):
+#   "Enter game process name (e.g., valorant): "
+#   → cs2
+#   "Waiting for cs2 to start..."
+#   ✓ cs2 detected — Priority: High, Affinity: P-cores (0-7)
+#   "Monitoring cs2... press Ctrl+C to stop"
+
+# Phase 3 — Auto-Restore (when game exits):
+#   ✓ Power plan → Balanced
+#   ✓ Services resumed: SysMain, WSearch, DiagTrack, Windows Update
+#   ✓ Nagle re-enabled
+#   ✅ System fully restored
+```
+
+### 🎮 GameBoosterLite.ps1 — Quick Pre-Game Boost
+
+**What it does**: Kills 21 bloatware processes, pauses 3 services, clears standby memory, flushes DNS, switches power plan to Ultimate Performance. No game monitoring or auto-restore.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\GameBoosterLite.ps1
+
+# What you'll see:
+#   ✓ Killed 15 background processes
+#   ✓ Paused SysMain, WSearch, DiagTrack
+#   ✓ Standby memory cleared
+#   ✓ DNS flushed
+#   ✓ Power plan → Ultimate Performance
+#   ✅ System boosted — launch your game!
+```
+
+---
+
+### 🌐 NetworkOptimizer.ps1 — Interactive Network Tuning
+
+**What it does**: 8-step interactive network optimization wizard — choose DNS providers, configure TCP settings (Nagle, auto-tuning, RSS, ECN), auto-detect optimal MTU via ping tests, disable bandwidth throttling, turn off Wi-Fi Sense, optimize adapter settings (power management, EEE, interrupt moderation, flow control), flush all caches, and run a latency benchmark.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\NetworkOptimizer.ps1
+
+# Step 1: DNS Provider
+#   [1] Cloudflare (1.1.1.1)     — fastest
+#   [2] Google (8.8.8.8)         — reliable
+#   [3] Quad9 (9.9.9.9)          — security-focused
+#   [4] OpenDNS (208.67.222.222) — family-safe options
+#   [5] Custom
+#   [6] Skip
+#   Choice: 1
+
+# Step 2: TCP Settings
+#   [1] Disable Nagle's Algorithm (recommended)
+#   Auto-Tuning Level → Normal
+#   RSS → Enabled
+#   ECN → Disabled
+
+# Step 3: MTU Detection
+#   Testing MTU 1500... fragmented
+#   Testing MTU 1472... OK!
+#   → Optimal MTU: 1472, setting on adapter
+
+# Step 4: Bandwidth Throttling → Removed
+# Step 5: Wi-Fi Sense → Disabled
+# Step 6: Adapter Optimization → EEE off, Interrupt Mod off
+# Step 7: Cache Flush → DNS, ARP, NetBIOS, Winsock
+# Step 8: Latency Test
+#   Cloudflare: avg 12ms, jitter 3ms
+#   Google:     avg 15ms, jitter 5ms
+```
+
+### 🌐 NetworkOptimizerRecommended.ps1 — Auto Network Fix
+
+**What it does**: Instantly applies recommended settings — Cloudflare DNS (1.1.1.1), Nagle disabled, TCP auto-tuning normal, RSS enabled, timestamps off, bandwidth throttle removed, Wi-Fi Sense off, all caches flushed.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\NetworkOptimizerRecommended.ps1
+
+# What you'll see:
+#   ✓ DNS → Cloudflare (1.1.1.1 / 1.0.0.1)
+#   ✓ Nagle's Algorithm → Disabled
+#   ✓ Auto-Tuning → Normal
+#   ✓ RSS → Enabled, Timestamps → Off
+#   ✓ QoS bandwidth reserve → Removed (100% available)
+#   ✓ Network throttling → Disabled
+#   ✓ Wi-Fi Sense → Off
+#   ✓ DNS/ARP/NetBIOS/Winsock caches flushed
+#   ✅ Network optimized — 13 settings applied
+```
+
+---
+
+### 🧹 BloatRemover.ps1 — Windows 11 Bloatware Removal
+
+**What it does**: Scans for 60+ pre-installed Windows 11 apps across 8 categories and lets you remove them interactively — all at once, all including Xbox, or per-category. Also blocks silent reinstallation and disables background app access.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\BloatRemover.ps1
+
+# Scanning... Found 32 removable bloatware apps
+
+# Choose:
+#   [A] Remove ALL bloatware (except Gaming)
+#   [G] Remove ALL including Gaming/Xbox apps
+#   [C] Choose by category
+#   [Q] Quit
+
+# Categories (if choosing [C]):
+#   [1] Communication & Social (People, Mail, Skype, Teams...)
+#   [2] Entertainment & Media (Groove, Movies, Solitaire, Clipchamp...)
+#   [3] News & Information (Bing News, Weather, Finance...)
+#   [4] Productivity / Office Stubs (Office Hub, OneNote, Cortana...)
+#   [5] Maps & Navigation (Maps, Alarms, Feedback Hub)
+#   [6] 3D & Mixed Reality (3D Viewer, Paint 3D, Mixed Reality...)
+#   [7] Gaming ⚠ (Xbox Game Bar, Overlay — WARNING shown)
+#   [8] Widgets & AI (Widgets, Copilot, Copilot Runtime)
+#
+#   Enter: 1,2,3,4,8
+
+# What you'll see:
+#   ✕ People — Removed
+#   ✕ Mail & Calendar — Removed
+#   ✕ Groove Music — Removed
+#   ✕ Windows Widgets — Removed
+#   ...
+#   🔇 Background app access disabled globally
+#   🔇 Silent app reinstallation blocked
+#   ✅ Removed: 28 apps
+```
+
+---
+
+### 🖱 MouseOptimizer.ps1 — Input Latency Reduction
+
+**What it does**: 6-step interactive mouse optimization — disable mouse acceleration with flat 1:1 SmoothMouse curves, set pointer speed to true 1:1 (6/11), remove all visual effects (trails, snap-to, shadow, hide-while-typing), configure raw input registry keys, USB polling rate guidance with device detection, and an eDPI calculator with pro player comparisons.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\MouseOptimizer.ps1
+
+# Shows current settings:
+#   Pointer Speed:     12 / 20
+#   Acceleration:      ON ⚠
+#   Pointer Trails:    OFF ✓
+#   Snap-to-Default:   ON ⚠
+
+# Step 1: Mouse Acceleration
+#   [1] Disable acceleration (recommended)
+#   → Sets MouseSpeed=0, Thresholds=0, flat 1:1 curves
+
+# Step 2: Pointer Speed
+#   [1] Set to 10 (6/11 — true 1:1 mapping)
+#   [2] Custom value (1-20)
+#   → Only 10/20 gives true 1:1 pixel mapping
+
+# Step 3: Visual Effects
+#   [1] Remove all effects (trails, snap, shadow)
+
+# Step 4: Raw Input
+#   [1] Enable raw input optimizations
+#   → Hover delay 0ms, touch prediction minimized, wheel routing direct
+
+# Step 5: USB Polling Rate
+#   125 Hz = 8.0ms    (office)
+#   500 Hz = 2.0ms    (competitive)
+#   1000 Hz = 1.0ms   (pro) ✓
+#   8000 Hz = 0.125ms (Razer Viper V3)
+#   → Detects mouse devices, disables USB selective suspend
+
+# Step 6: eDPI Calculator
+#   Mouse DPI: 800
+#   In-game sens: 1.5
+#   → Your eDPI: 1200 — Medium, versatile for most games
+#   Pro ranges: Valorant 200-400, CS2 600-1000, Apex 800-1600
+```
+
+### 🖱 MouseOptimizerLite.ps1 — Quick Mouse Fix
+
+**What it does**: Instantly disables acceleration (flat 1:1 curves), sets pointer speed to 10/20 (6/11), removes trails/snap/shadow, applies raw input tweaks, and disables USB selective suspend.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\MouseOptimizerLite.ps1
+
+# What you'll see:
+#   ✓ Acceleration OFF — flat 1:1 curve
+#   ✓ Pointer speed 10/20 (6/11 — true 1:1)
+#   ✓ Pointer trails OFF
+#   ✓ Snap-to-default OFF
+#   ✓ Cursor shadow OFF
+#   ✓ Hover delay 0ms
+#   ✓ USB selective suspend OFF
+#   ✓ USB power saving OFF
+#   ✅ Mouse optimized — 10 changes
+#   ⚠ Log out and back in for all changes to take effect
+```
+
+---
+
+### 🖥 GPUOptimizer.ps1 — Per-GPU Performance Tuning
+
+**What it does**: Auto-detects your GPU vendor (NVIDIA or AMD) and shows vendor-specific tuning options, plus universal settings. NVIDIA: power management, threaded optimization, low latency mode, texture filtering, VSync, shader cache. AMD: Anti-Lag, Enhanced Sync, ULPS, tessellation, shader cache. Universal: disable MPO, HAGS, Game Mode, fullscreen optimizations, Game DVR.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\GPUOptimizer.ps1
+
+# Detection:
+#   Found: NVIDIA GeForce RTX 4070 Ti
+#   Driver: 32.0.15.6590
+#   VRAM: 12.0 GB
+
+# NVIDIA Options:
+#   Power Management → [1] Prefer Maximum Performance
+#   Threaded Opt     → [1] Off (lower latency)
+#   Low Latency Mode → [1] Ultra (NVIDIA Reflex)
+#   Texture Filtering → [1] Performance
+#   Global VSync     → [1] Off
+#   Shader Cache     → [1] Unlimited
+
+# Universal Options:
+#   MPO              → [1] Disable (fixes stuttering in many games)
+#   HAGS             → [1] Enable
+#   Game Mode        → [1] Enable
+#   FSO              → [1] Disable (true exclusive fullscreen)
+#   Game DVR         → [1] Disable (free GPU resources)
+
+# ✅ GPU Optimized — 11 changes applied
+# ⚠ Restart required for HAGS and MPO changes
+```
+
+**AMD example:**
+```powershell
+# Detection:
+#   Found: AMD Radeon RX 7900 XTX
+
+# AMD Options:
+#   Anti-Lag     → [1] Enable (reduces input latency)
+#   Enhanced Sync → [1] Disable (reduces stutter)
+#   Tessellation → [1] Application-controlled
+#   + Surface Format Opt enabled, Shader Cache on, ULPS disabled
+```
+
+### 🖥 GPUOptimizerLite.ps1 — Quick GPU Fix
+
+**What it does**: Auto-detects GPU and applies all recommended settings instantly — NVIDIA (max power, Ultra latency, threaded off), AMD (Anti-Lag on, ULPS off, shader cache), plus universal MPO off, HAGS on, Game Mode on, FSO off, Game DVR off.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\GPUOptimizerLite.ps1
+
+# What you'll see:
+#   🖥 NVIDIA GeForce RTX 4070 Ti
+#   ✓ Power: Max Performance
+#   ✓ Low Latency: Ultra
+#   ✓ Threaded Opt: Off
+#   ✓ MPO: Disabled (fixes stuttering)
+#   ✓ HAGS: Enabled
+#   ✓ Game Mode: Enabled
+#   ✓ Fullscreen Optimizations: Disabled
+#   ✓ Game DVR: Disabled
+#   ✅ GPU Optimized — 8 changes
+#   ⚠ Restart required for HAGS and MPO changes
+```
+
+---
+
+### ⏱ LatencyMonitor.ps1 — DPC/ISR Latency Checker
+
+**What it does**: Comprehensive system latency analysis — queries system timer resolution via `NtQueryTimerResolution`, monitors DPC (Deferred Procedure Call) and ISR (Interrupt Service Routine) latency in real-time with a live visual bar, scans all running drivers against a 30+ known problematic driver database with specific fix recommendations, checks for devices in error state, runs optional network latency tests with jitter analysis, and provides context-aware recommendations.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\LatencyMonitor.ps1
+
+# Configure duration:
+#   [1] 15 seconds    [2] 30 seconds (recommended)
+#   [3] 60 seconds    [4] Custom
+
+# Timer Resolution:
+#   Current: 1.00ms ✓
+#   Minimum: 0.50ms
+#   Maximum: 15.63ms
+
+# Live DPC/ISR Monitor (30 seconds):
+#   DPC [████████░░░░░░░░] 1.2%  ISR [██░░░░░░░░░░░░░░] 0.3%  [25s]
+#   DPC [██████████░░░░░░] 2.1%  ISR [███░░░░░░░░░░░░░] 0.5%  [24s]
+#   ...
+
+# Results:
+#   DPC — avg: 1.5%  peak: 3.2%  ✓ EXCELLENT
+#   ISR — avg: 0.4%  peak: 1.1%  ✓ EXCELLENT
+
+# Driver Analysis:
+#   Found 4 drivers with known latency issues:
+#   [1] nvlddmkm.sys — NVIDIA GPU driver
+#       Fix: Update to latest Game Ready driver, clean install
+#   [2] Netwtw10.sys — Intel Wi-Fi 7
+#       Fix: Update Intel Wi-Fi driver or switch to Ethernet
+#   [3] HDAudBus.sys — HD Audio bus
+#       Fix: Update Realtek/audio driver or disable unused audio devices
+#   [4] intelppm.sys — Intel Processor Power Management
+#       Fix: Disable C-States in BIOS or set power plan to High Performance
+
+# Network Latency (optional):
+#   Cloudflare DNS       avg: 8ms   jitter: 2ms   (5-10ms)
+#   Google DNS           avg: 12ms  jitter: 4ms   (8-16ms)
+#   Quad9 DNS            avg: 15ms  jitter: 3ms   (12-18ms)
+
+# Recommendations:
+#   💡 Use Ethernet instead of Wi-Fi for lowest network latency
+#   💡 Run GameBooster.ps1 before gaming to kill background processes
+```
+
+### ⏱ LatencyMonitorLite.ps1 — Quick Latency Check
+
+**What it does**: Runs a 15-second DPC/ISR scan with live bar visualization, then auto-scans all running drivers against 18 known problematic drivers with quick fix descriptions.
+
+```powershell
+Set-ExecutionPolicy Bypass -Scope Process -Force
+.\LatencyMonitorLite.ps1
+
+# Live monitor (15 seconds):
+#   DPC [██████░░░░░░░░░░] 1.0%  ISR: 0.2%  [12s]
+
+# Results:
+#   DPC — avg: 0.8%  peak: 2.1%
+#   ISR — avg: 0.3%  peak: 0.9%
+#   ✓ EXCELLENT — Low latency system!
+
+# Driver scan:
+#   ⚠ nvlddmkm.sys — Update NVIDIA driver (clean install)
+#   ⚠ Netwtw10.sys — Update Intel Wi-Fi 7 driver
+#   Found 2 potential latency sources
+```
+
+---
+
+## 🧠 Recommended Script Order for New Setups
+
+For maximum effect, run these scripts in this order on a fresh Windows 11 install:
+
+```
+1. .\BloatRemover.ps1              — Remove junk apps first
+2. .\PrivacyLockdown.ps1           — Lock down telemetry & tracking
+3. .\ElitePerformance.ps1          — Apply power plan + system optimizations
+   (or .\ProPerformance.ps1 for laptops)
+4. .\GPUOptimizer.ps1              — Tune your GPU
+5. .\MouseOptimizer.ps1            — Fix mouse input
+6. .\NetworkOptimizer.ps1          — Tune your network
+7. .\WindowsUpdateControl.ps1      — Control update behavior
+8. .\StartupManager.ps1            — Clean up startup items
+9. .\TempCleaner.ps1               — Clean temp files
+
+Before each gaming session:
+   .\GameBooster.ps1               — Kill bloat, boost game, auto-restore
+
+Diagnose issues:
+   .\LatencyMonitor.ps1            — Find latency-causing drivers
+```
 
 ---
 
 ## ❓ FAQ
 
 **Q: Will this damage my PC?**
-A: No. All changes are software-level (registry, services, power plans). The `RestoreDefaults.ps1` script reverses everything. A System Restore point is also created automatically.
+A: No. All changes are software-level (registry, services, power plans). `RestoreDefaults.ps1` reverses Elite/Pro changes. System restore points are created automatically.
 
-**Q: Which tier should I choose?**
-A: **Elite** if you have a desktop gaming rig with good cooling and don't care about power consumption. **Pro** if you have a laptop, a mixed-use machine, or want sleep/display timeout to still work.
+**Q: Which tier should I choose — Elite or Pro?**
+A: **Elite** for dedicated gaming desktops with good cooling. **Pro** for laptops, daily-driver PCs, or if you want sleep/display-off to still work.
 
 **Q: Will this affect game anti-cheat?**
 A: No. These are standard Windows configuration changes. No drivers or system files are modified.
 
 **Q: My FPS didn't change. Is it working?**
-A: The primary benefit is **lower input latency and more consistent frame times**, not necessarily higher FPS. You'll notice smoother gameplay, less stuttering, and more responsive controls. Run `powercfg /list` to verify your custom plan is active.
+A: The primary benefit is **lower input latency and more consistent frame times**, not necessarily higher peak FPS. You'll notice smoother gameplay, less stuttering, and more responsive controls.
 
-**Q: Does Elite increase power consumption?**
-A: Yes. The CPU never idles, which increases power draw at idle by ~20-50W. Use Pro if power consumption matters.
+**Q: Can I use Lite scripts instead of Full?**
+A: Yes! Lite scripts apply the most impactful settings automatically. Full scripts give you per-setting control. Both achieve the same core optimizations.
 
-**Q: I want to keep some tweaks but not others.**
-A: The scripts are heavily commented. You can read through them and comment out (`#`) any sections you want to skip.
+**Q: Do I need to restart after running scripts?**
+A: Most changes are instant. **GPU Optimizer** changes (HAGS, MPO) and **Mouse Optimizer** changes require a log-out or restart. Scripts will tell you when a restart is needed.
 
 ---
 
@@ -392,9 +767,14 @@ A: The scripts are heavily commented. You can read through them and comment out 
 |---|---|
 | "Execution Policy" error | Run `Set-ExecutionPolicy Bypass -Scope Process -Force` first |
 | Script won't elevate | Right-click PowerShell → Run as Administrator, then run the script |
-| Restore point fails | Windows limits one restore point per 24 hours. The script continues anyway. |
+| "not recognized" error | Make sure you're in the correct directory: `cd "C:\path\to\scripts"` |
+| Restore point fails | Windows limits one restore point per 24 hours. Scripts continue anyway |
 | USB device issues | Run `RestoreDefaults.ps1` — USB Selective Suspend will be re-enabled |
-| System feels sluggish after Elite | Switch to Pro tier — Elite disables all idle states which increases heat |
+| Mouse changes not working | Log out and back in, or restart your PC |
+| GPU changes not working | Restart required for HAGS and MPO changes |
+| Game DVR still recording | Restart required, then check in Settings → Gaming |
+| Network changes lost | Some changes reset after Windows Update — re-run the network script |
+| System feels sluggish after Elite | Switch to Pro: `.\RestoreDefaults.ps1` then `.\ProPerformance.ps1` |
 
 ---
 
@@ -407,5 +787,7 @@ MIT License — use, modify, and distribute freely.
 <div align="center">
 
 **Built for gamers who want every last frame. ⚡**
+
+⭐ Star this repo if it helped your gaming performance!
 
 </div>
