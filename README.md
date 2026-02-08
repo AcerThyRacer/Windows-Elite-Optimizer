@@ -172,33 +172,492 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; cd "$HOME\Downloads\Windows-El
 
 ---
 
-## 📁 Complete Script Reference
+## 📁 Complete Script Summary
 
-| File | Type | Description |
-|---|---|---|
-| `ElitePerformance.ps1` | ⚡ Full | Aggressive max-performance preset for dedicated gaming desktops |
-| `ProPerformance.ps1` | ⚡ Full | Balanced high-performance preset, safe for laptops |
-| `RestoreDefaults.ps1` | 🔄 Restore | Completely reverses all Elite/Pro changes |
-| `RemoveOneDrive.ps1` | ☁ Removal | Full OneDrive wipe — app, folders, registry, sidebar |
-| `RemoveOutlook.ps1` | 📧 Removal | Full Outlook wipe — UWP, classic, cache, telemetry |
-| `TempCleaner.ps1` | 🧹 Full | Deep temp/cache cleanup with space recovery report |
-| `StartupManager.ps1` | 🚀 Full | Interactive startup optimizer with safety ratings |
-| `StartupManagerLite.ps1` | 🚀 Lite | Auto-disable known bloatware startups |
-| `PrivacyLockdown.ps1` | 🛡 Full | 10-category privacy hardening + hosts file blocking |
-| `PrivacyLockdownLite.ps1` | 🛡 Lite | Quick telemetry/ads/Cortana disable |
-| `WindowsUpdateControl.ps1` | 🔄 Full | 7-category update control with deferrals |
-| `WindowsUpdateControlLite.ps1` | 🔄 Lite | Quick update deferrals + no auto-restart |
-| `GameBooster.ps1` | 🎮 Full | Per-game performance mode with auto-restore |
-| `GameBoosterLite.ps1` | 🎮 Lite | Quick pre-game boost, no monitoring |
-| `NetworkOptimizer.ps1` | 🌐 Full | 8-step interactive network tuning |
-| `NetworkOptimizerRecommended.ps1` | 🌐 Lite | Auto-apply best network settings |
-| `BloatRemover.ps1` | 🧹 Full | Remove 60+ bloatware apps by category |
-| `MouseOptimizer.ps1` | 🖱 Full | 6-step mouse input latency reduction |
-| `MouseOptimizerLite.ps1` | 🖱 Lite | Instant acceleration off + 1:1 speed |
-| `GPUOptimizer.ps1` | 🖥 Full | Per-GPU tuning — NVIDIA/AMD auto-detect |
-| `GPUOptimizerLite.ps1` | 🖥 Lite | Quick GPU fix with vendor detection |
-| `LatencyMonitor.ps1` | ⏱ Full | DPC/ISR monitoring + driver analysis |
-| `LatencyMonitorLite.ps1` | ⏱ Lite | Quick 15-second latency check |
+> Every script **self-elevates** to Administrator, logs all changes to `%USERPROFILE%\<ScriptName>_log.txt`, and — where applicable — creates a **System Restore Point** before modifying anything.
+
+---
+
+### ⚡ Performance Scripts
+
+#### `ElitePerformance.ps1` — Maximum Performance Preset
+
+| | |
+|---|---|
+| **Type** | Full (interactive) |
+| **Best for** | Dedicated gaming desktops with good cooling |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | No (instant) |
+
+Builds a custom **"Elite Performance"** power plan based on Windows' hidden Ultimate Performance scheme, then pushes every setting to the extreme:
+
+- **CPU**: 100% minimum processor state, zero core parking, aggressive turbo boost, idle states disabled
+- **Memory**: Disables Superfetch/SysMain, Prefetch, and memory compression
+- **Network**: Disables Nagle's algorithm on all adapters for lower packet latency
+- **Services**: Stops and disables 10 background services (SysMain, DiagTrack, WSearch, Connected User Experiences, WAP Push, dmwappushservice, Remote Registry, Fax, Print Spooler if no printers, Retail Demo)
+- **Visual effects**: Turns off all Windows animations, shadows, transparency, and smooth-scrolling
+- **Telemetry**: Disables diagnostics tracking, Cortana, Advertising ID
+- **Foreground priority**: Sets `Win32PrioritySeparation` to `0x26` (3× foreground boost)
+- **Storage**: Disables NTFS 8.3 short-name generation and last access timestamps
+
+---
+
+#### `ProPerformance.ps1` — Balanced Performance Preset
+
+| | |
+|---|---|
+| **Type** | Full (interactive) |
+| **Best for** | Laptops, daily-driver PCs, mixed-use machines |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | No (instant) |
+
+Same optimizations as Elite but with **safety margins** for everyday use:
+
+- **CPU**: 5% minimum state (allows idle), 50% minimum core parking, turbo boost enabled
+- **Power management**: Sleep after 30 min, display off after 15 min (preserved, not disabled)
+- **Memory**: Disables Superfetch/Prefetch but keeps memory compression ON
+- **Services**: Disables 6 services instead of 10 (skips Print Spooler, Remote Registry, Fax, Retail Demo)
+- **Visual effects**: Reduced but keeps ClearType and smooth scrolling for readability
+- **Network & telemetry**: Same as Elite (Nagle disabled, telemetry off)
+
+---
+
+#### `RestoreDefaults.ps1` — Undo Everything
+
+| | |
+|---|---|
+| **Type** | Restore tool |
+| **Best for** | Reverting any Elite or Pro changes |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | Reboot recommended |
+
+Completely reverses **all** changes made by ElitePerformance or ProPerformance:
+
+- Removes custom power plans ("Elite Performance" / "Pro Performance") and reactivates the **Balanced** plan
+- Re-enables and starts all 10 disabled services
+- Restores default visual effects and Windows animation settings
+- Re-enables Superfetch/SysMain, Prefetch, and memory compression
+- Re-enables Nagle's algorithm on all network adapters
+- Restores default NTFS settings, `Win32PrioritySeparation`, and foreground priority
+
+---
+
+### 🎮 Gaming Scripts
+
+#### `GameBooster.ps1` — Per-Game Performance Mode
+
+| | |
+|---|---|
+| **Type** | Full (interactive, with game monitor) |
+| **Best for** | Running before any gaming session |
+| **Creates restore point** | No (temporary changes only) |
+| **Restart required** | No — auto-restores when game closes |
+
+An 8-phase gaming optimizer that **automatically restores everything** when your game exits:
+
+1. **Phase 1 – Clear Memory**: Trims all process working sets and flushes the file system cache using Win32 `EmptyWorkingSet`, freeing standby RAM for texture streaming
+2. **Phase 2 – Kill Bloat**: Terminates 24 background processes (Edge, Teams, Spotify, Discord updater, OneDrive, Google Drive, Dropbox, Corsair iCUE, Nahimic Audio, Waves MaxxAudio, Windows Search, Phone Link, Widgets, Adobe services, Java updater, NVIDIA Share/Telemetry)
+3. **Phase 3 – Pause Services**: Temporarily stops SysMain, Windows Search Indexer, Diagnostics Tracking, and Windows Update
+4. **Phase 4 – Flush Network**: Flushes DNS/ARP caches, resets IP stack and Winsock, disables Nagle's algorithm on all adapters
+5. **Phase 5 – Power Plan**: Switches to Ultimate Performance (or High Performance fallback)
+6. **Phase 6 – GPU Priority**: Sets `GPU Priority=8`, `SFIO Priority=High` in the Windows multimedia scheduler for the "Games" task
+7. **Phase 7 – Game Monitor**: Optionally waits for your game process (`cs2`, `valorant`, etc.), sets its priority to **High**, and pins it to P-cores on Intel hybrid CPUs (cores 0–7 via affinity mask `0xFF`)
+8. **Phase 8 – Auto-Restore**: When the game exits, restarts killed apps (Spotify, Discord), resumes all paused services, and switches the power plan back to Balanced
+
+---
+
+#### `GameBoosterLite.ps1` — Quick Pre-Game Boost
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Quick boost before launching a game |
+| **Creates restore point** | No |
+| **Restart required** | No — services restore on reboot |
+
+A stripped-down version of GameBooster with **no game monitoring or auto-restore**:
+
+- Kills 21 background processes (same list minus NVIDIA Share and Telemetry entries from the full version)
+- Pauses 3 services (SysMain, WSearch, DiagTrack — excludes Windows Update)
+- Clears standby memory via working set trimming
+- Flushes DNS cache
+- Switches power plan to Ultimate Performance (High Performance fallback)
+- **Does NOT** set CPU affinity, game priority, or auto-restore — reboot or run `RestoreDefaults.ps1` to undo
+
+---
+
+#### `GPUOptimizer.ps1` — Per-GPU Performance Tuning
+
+| | |
+|---|---|
+| **Type** | Full (interactive, per-setting choices) |
+| **Best for** | Fine-tuning GPU settings for competitive gaming |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | ⚠ Yes for HAGS and MPO changes |
+
+Auto-detects your GPU vendor (NVIDIA, AMD, or Intel) and provides **vendor-specific** tuning options plus universal Windows settings:
+
+- **NVIDIA settings** (via registry): Power Management mode (Max Performance), Threaded Optimization (Off for lower latency), Low Latency Mode (Ultra/Reflex), Texture Filtering quality, global VSync (On/Off), Shader Cache size (Unlimited/10 GB/Default)
+- **AMD settings** (via registry): Radeon Anti-Lag (enabled), Enhanced Sync (disabled to reduce stutter), Tessellation mode (application-controlled), ULPS (Ultra Low Power State — disabled to prevent downclocking), Surface Format optimization, Shader Cache (enabled)
+- **Universal settings**: Disables Multi-Plane Overlay (MPO — fixes stuttering in many games), enables/disables Hardware-Accelerated GPU Scheduling (HAGS), enables Game Mode, disables Fullscreen Optimizations (FSO) for true exclusive fullscreen, disables Game DVR/Game Bar recording
+
+---
+
+#### `GPUOptimizerLite.ps1` — Quick GPU Fix
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Applying all recommended GPU settings at once |
+| **Creates restore point** | No |
+| **Restart required** | ⚠ Yes for HAGS and MPO changes |
+
+Auto-detects your GPU and instantly applies **all recommended settings** without prompts:
+
+- **NVIDIA**: Max power, Ultra low latency, Threaded Optimization off
+- **AMD**: Anti-Lag on, ULPS disabled, Shader Cache enabled
+- **Universal**: MPO off, HAGS on, Game Mode on, Fullscreen Optimizations off, Game DVR off
+- Applies all changes in one pass — no interactive menus
+
+---
+
+#### `MouseOptimizer.ps1` — Input Latency Reduction
+
+| | |
+|---|---|
+| **Type** | Full (interactive, 6-step wizard) |
+| **Best for** | Competitive FPS gamers who want pixel-perfect aim |
+| **Creates restore point** | No |
+| **Restart required** | ⚠ Log out/in required |
+
+A 6-step interactive mouse tuning wizard:
+
+1. **Acceleration**: Disables Enhance Pointer Precision (`MouseSpeed=0`, `Threshold1/2=0`) and writes flat 1:1 `SmoothMouseX/YCurve` byte arrays — eliminating the speed-dependent multiplier
+2. **Pointer Speed**: Sets to `10/20` (6/11 in Control Panel slider) — the **only** value that gives true 1:1 sensor-to-pixel mapping without any Windows multiplier
+3. **Visual Effects**: Removes pointer trails, snap-to-default button, cursor shadow, and show-pointer-while-typing
+4. **Raw Input**: Sets mouse hover delay to 0ms, minimizes touch prediction latency, disables gesture/contact visualization, routes mouse wheel directly to foreground window
+5. **USB Polling Rate**: Detects connected HID mouse devices, shows polling rate table (125 Hz–8000 Hz), disables USB Selective Suspend to prevent the mouse from sleeping, disables USB power saving in the active power plan, and sets MMCSS `SystemResponsiveness` to 0
+6. **eDPI Calculator**: Enter your mouse DPI + in-game sensitivity → calculates effective DPI and compares to pro player ranges (Valorant 200–400, CS2 600–1000, Apex 800–1600)
+
+---
+
+#### `MouseOptimizerLite.ps1` — Quick Mouse Fix
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Instantly fixing mouse input without menus |
+| **Creates restore point** | No |
+| **Restart required** | ⚠ Log out/in required |
+
+Instantly applies the most impactful mouse settings without any prompts:
+
+- Disables acceleration with flat 1:1 `SmoothMouse` curves
+- Sets pointer speed to 10/20 (true 1:1)
+- Removes trails, snap-to-default, and cursor shadow
+- Sets hover delay to 0ms, wheel routing to direct-to-foreground
+- Disables USB Selective Suspend and USB power saving
+- **Does NOT** include DPI calculator or polling rate guidance
+
+---
+
+#### `LatencyMonitor.ps1` — DPC/ISR Latency Checker
+
+| | |
+|---|---|
+| **Type** | Full (interactive, configurable duration) |
+| **Best for** | Diagnosing audio crackling, mouse stuttering, or frame drops |
+| **Creates restore point** | No (read-only, no system changes) |
+| **Restart required** | No |
+
+A comprehensive **system latency analysis** tool (does NOT modify anything — diagnostic only):
+
+1. **Timer Resolution**: Queries `NtQueryTimerResolution` to show current, minimum, and maximum timer resolution in milliseconds — flags if above 1ms
+2. **DPC/ISR Monitoring**: Samples `%DPC Time` and `%Interrupt Time` performance counters every second for a configurable duration (15s/30s/60s/custom) with a **live visual bar** — reports average, peak, and minimum for both
+3. **Driver Analysis**: Scans all running `Win32_SystemDriver` instances against a database of **30+ known problematic drivers** (GPU: `nvlddmkm.sys`, `amdkmdag.sys`; Network: `ndis.sys`, `Netwtw10.sys`; Audio: `HDAudBus.sys`, `portcls.sys`; USB: `USBXHCI.sys`; Power: `intelppm.sys`, `amdppm.sys`; etc.) with **specific fix recommendations** per driver
+4. **Device Check**: Lists any PnP devices in error state, shows active audio endpoints and recommends disabling unused ones
+5. **Network Latency**: Optional multi-target ping test (Cloudflare, Google, AWS, Quad9) with average, min/max, and **jitter** calculation
+6. **Recommendations**: Context-aware tips based on results (suggests GPUOptimizer, driver updates, ISLC, Ethernet, GameBooster)
+
+---
+
+#### `LatencyMonitorLite.ps1` — Quick Latency Check
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, fixed 15-second scan) |
+| **Best for** | Quick health check before a gaming session |
+| **Creates restore point** | No (read-only, no system changes) |
+| **Restart required** | No |
+
+A fast 15-second latency check with automatic driver scan:
+
+- Monitors DPC/ISR for 15 seconds with a live visual bar (no configurable duration)
+- Auto-scans running drivers against a database of **18 known problematic drivers** with quick fix descriptions
+- Rates system as Excellent (<2% DPC, <1% ISR), Fair, or High latency
+- **Does NOT** query timer resolution, test network latency, or check for devices in error state
+
+---
+
+### 🌐 Network Scripts
+
+#### `NetworkOptimizer.ps1` — Interactive Network Tuning
+
+| | |
+|---|---|
+| **Type** | Full (interactive, 8-step wizard) |
+| **Best for** | Users who want per-setting control over their network |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | ⚠ May need restart for some changes |
+
+An 8-step interactive wizard covering every aspect of Windows network configuration:
+
+1. **DNS Provider**: Choose from Cloudflare (1.1.1.1), Google (8.8.8.8), Quad9 (9.9.9.9), OpenDNS (208.67.222.222), or enter custom DNS — sets via `Set-DnsClientServerAddress`
+2. **TCP Optimization**: Disable Nagle's algorithm (`TcpAckFrequency=1, TCPNoDelay=1` on all interfaces), configure TCP Window Auto-Tuning (Normal/Disabled/Restricted), enable RSS (Receive-Side Scaling), enable Direct Cache Access, disable TCP Timestamps, configure ECN
+3. **MTU Detection**: Automated MTU size testing via `ping -f` fragmentation tests from 1500 down, finding the optimal payload size and setting it on the active adapter via `netsh`
+4. **Bandwidth & QoS**: Removes Windows' default 20% QoS bandwidth reservation (`NonBestEffortLimit=0`), disables `NetworkThrottlingIndex` for unlimited throughput, sets `SystemResponsiveness=0` for gaming priority
+5. **Wi-Fi Sense**: Disables auto-connect to suggested networks, disables Hotspot 2.0, disables Wi-Fi auto-switching
+6. **Adapter Settings**: Per-adapter optimizations — disable power management (prevents disconnects), disable Energy Efficient Ethernet (EEE), optionally disable Interrupt Moderation (lower latency, slightly higher CPU), disable Flow Control
+7. **Cache Flush**: Flushes DNS, ARP, NetBIOS, and resets Winsock catalog
+8. **Latency Test**: Optional ping test to Cloudflare, Google, and Quad9 with average, min/max, and color-coded results
+
+---
+
+#### `NetworkOptimizerRecommended.ps1` — Auto Network Fix
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Applying all recommended network settings at once |
+| **Creates restore point** | No |
+| **Restart required** | ⚠ May need restart for some changes |
+
+Instantly applies our recommended settings — no menus, no choices:
+
+- DNS → Cloudflare (1.1.1.1 / 1.0.0.1) on the active adapter
+- Nagle's Algorithm → disabled on all interfaces
+- TCP Auto-Tuning → Normal, RSS → Enabled, Timestamps → Off, DCA → Enabled
+- QoS Bandwidth Reserve → removed (100% available), Network Throttling → disabled
+- SystemResponsiveness → 0 (gaming priority)
+- Wi-Fi Sense → disabled
+- Flushes DNS, ARP, NetBIOS caches and resets Winsock
+- Applies ~13 settings total in one pass
+
+---
+
+### 🛡 Privacy & Update Scripts
+
+#### `PrivacyLockdown.ps1` — Full Privacy Hardening
+
+| | |
+|---|---|
+| **Type** | Full (interactive, 10-category wizard) |
+| **Best for** | Users who want comprehensive privacy control |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | No |
+
+Disables telemetry and tracking across **10 categories**:
+
+1. **Telemetry**: Sets `AllowTelemetry=0`, stops DiagTrack service, disables Connected User Experiences
+2. **Activity History**: Disables local and cloud activity history, blocks timeline upload
+3. **Clipboard**: Disables cloud clipboard sync across devices
+4. **Location**: Blocks background location access for all apps
+5. **Camera/Microphone**: Blocks background camera and mic access
+6. **Find My Device**: Disables device tracking/locating
+7. **Advertising ID**: Resets and disables the Windows Advertising ID
+8. **Cortana/Copilot**: Fully disables both Cortana and Windows Copilot
+9. **Typing/Inking**: Disables keystroke data collection and personalization
+10. **Hosts File**: Blocks 40+ Microsoft tracking domains by adding them to `C:\Windows\System32\drivers\etc\hosts`
+
+---
+
+#### `PrivacyLockdownLite.ps1` — Quick Privacy Fix
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Quickly disabling the most invasive tracking |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+Applies the **5 most impactful** privacy settings instantly:
+
+- Telemetry → disabled (`AllowTelemetry=0`, DiagTrack stopped)
+- Advertising ID → disabled
+- Cortana/Copilot → fully disabled
+- Activity History → disabled
+- Feedback Notifications → off
+- **Does NOT** modify the hosts file, block camera/location, or touch clipboard sync
+
+---
+
+#### `WindowsUpdateControl.ps1` — Full Update Control
+
+| | |
+|---|---|
+| **Type** | Full (interactive, 7-category wizard) |
+| **Best for** | Users who want fine-grained update management |
+| **Creates restore point** | ✅ Yes |
+| **Restart required** | No |
+
+Configures Windows Update behavior across **7 categories** via Group Policy registry keys:
+
+1. **Active Hours**: Sets to 10:00 AM – 2:00 AM (prevents restarts during gaming hours)
+2. **Feature Updates**: Deferred by 30 days
+3. **Quality Updates**: Deferred by 7 days
+4. **Auto-Restart**: Blocked during active hours, no forced restarts
+5. **P2P Delivery Optimization**: Disabled (stops Windows from uploading updates to other PCs)
+6. **Driver Updates**: Excluded from Windows Update (prevents GPU driver auto-downgrades)
+7. **Update Notifications**: Suppressed
+
+---
+
+#### `WindowsUpdateControlLite.ps1` — Quick Update Control
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Quick protection from unwanted updates and restarts |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+Applies the 4 most important update settings instantly:
+
+- Feature updates deferred 30 days
+- Quality updates deferred 7 days
+- Auto-restart blocked
+- P2P Delivery Optimization disabled
+- **Does NOT** change active hours or exclude driver updates
+
+---
+
+### 🧹 Cleanup & Maintenance Scripts
+
+#### `BloatRemover.ps1` — Windows 11 Bloatware Removal
+
+| | |
+|---|---|
+| **Type** | Full (interactive, per-category choices) |
+| **Best for** | Fresh Windows installs or cleaning up a cluttered system |
+| **Creates restore point** | No (app removal only) |
+| **Restart required** | No |
+
+Scans for **60+ pre-installed Windows 11 apps** across 8 categories and lets you remove them:
+
+- **Communication & Social**: People, Mail & Calendar, Skype, Teams (Personal), Phone Link, Microsoft To Do
+- **Entertainment & Media**: Groove Music, Movies & TV, Solitaire, Clipchamp, Facebook, TikTok, Instagram, and more
+- **News & Information**: Bing News, Weather, Finance, Sports, Maps, Tips, Cortana, and more
+- **Productivity / Office Stubs**: Office Hub, OneNote, Sticky Notes, Power Automate
+- **Maps & Navigation**: Windows Maps, Alarms & Clock, Feedback Hub, Get Help
+- **3D & Mixed Reality**: 3D Viewer, Paint 3D, Mixed Reality Portal
+- **Gaming** ⚠: Xbox Game Bar, Xbox Overlay, Xbox Speech-to-Text (warns about breaking Win+G)
+- **Widgets & AI**: Windows Widgets, Copilot, Copilot Provider, Copilot Runtime
+
+Removal modes: **[A]** remove all except gaming, **[G]** remove all including gaming, **[C]** choose by category. Also blocks silent reinstallation and disables global background app access.
+
+---
+
+#### `TempCleaner.ps1` — Deep Temp & Cache Cleanup
+
+| | |
+|---|---|
+| **Type** | Full (interactive) |
+| **Best for** | Recovering disk space and clearing stale caches |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+Scans and cleans temporary files from **20+ locations**:
+
+- Windows Temp (`C:\Windows\Temp`), User Temp (`%TEMP%`)
+- Browser caches: Chrome, Firefox, Edge (LocalState, Cache, Code Cache)
+- GPU shader caches: NVIDIA (`GLCache`), AMD (`VkCache`), DirectX (`D3DSCache`)
+- Windows Update cache (`SoftwareDistribution\Download`)
+- Thumbnail cache (`explorer` thumbnails database)
+- Prefetch files (`C:\Windows\Prefetch`)
+- Recycle Bin (all drives)
+- Shows **pre-scan sizes** for each category and a final **"Recovered X.XX GB"** summary
+
+---
+
+#### `StartupManager.ps1` — Interactive Startup Optimizer
+
+| | |
+|---|---|
+| **Type** | Full (interactive menu) |
+| **Best for** | Auditing and controlling what runs at boot |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+Scans all startup programs from registry (`HKCU/HKLM\...\Run`) and `shell:startup` folders, then provides:
+
+- **Safety ratings**: 🟢 Safe to disable (Teams, Spotify, Discord updater), 🟡 Caution (Realtek Audio, Steam), 🔴 Do NOT disable (GPU drivers, antivirus)
+- **Interactive toggle**: Enable or disable specific items by number
+- **Auto-disable mode**: One-click disable of 20+ known bloatware startup entries
+- **Review disabled items**: See what's already been disabled
+
+---
+
+#### `StartupManagerLite.ps1` — Quick Startup Fix
+
+| | |
+|---|---|
+| **Type** | Lite (no prompts, instant) |
+| **Best for** | Instantly cleaning up startup without reviewing each item |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+Instantly disables **20+ known bloatware startup entries** without showing a menu:
+
+- Microsoft Teams, Spotify, Discord (updater), Adobe Creative Cloud, OneDrive, Skype, Cortana, Microsoft Edge (updater), Java Updater, and more
+- Scans both HKCU and HKLM Run keys plus the Startup folder
+- Reports count of items disabled
+
+---
+
+### ☁ App Removal Scripts
+
+#### `RemoveOneDrive.ps1` — Complete OneDrive Wipe
+
+| | |
+|---|---|
+| **Type** | Removal (interactive confirmation) |
+| **Best for** | Users who don't use OneDrive and want it completely gone |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+> ⚠ **IRREVERSIBLE** — Back up your OneDrive folder first. Cloud sync cannot be restored.
+
+Fully removes Microsoft OneDrive from every trace on the system:
+
+- Kills OneDrive processes and uninstalls via both `winget` and `OneDriveSetup.exe /uninstall`
+- Removes **9 hidden data folders** (AppData Local, Roaming, ProgramData, etc.)
+- Removes Explorer sidebar integration (CLSID namespace entry)
+- Removes context menu entries ("Share with OneDrive", "Move to OneDrive")
+- Removes sync icon overlays from Explorer
+- Removes scheduled tasks and startup entries
+- Blocks reinstallation via Group Policy (`DisableFileSyncNGSC=1`)
+
+---
+
+#### `RemoveOutlook.ps1` — Complete Outlook Wipe
+
+| | |
+|---|---|
+| **Type** | Removal (interactive confirmation) |
+| **Best for** | Users who use a different email client |
+| **Creates restore point** | No |
+| **Restart required** | No |
+
+> ⚠ **IRREVERSIBLE** — Export your emails, contacts, and calendar data BEFORE running.
+
+Removes both the new UWP Outlook and classic Office Outlook:
+
+- Kills Outlook processes and removes UWP app packages
+- Clears classic Outlook email profiles from `HKCU\Software\Microsoft\Office\...\Outlook\Profiles`
+- Wipes **12+ data locations** (PST/OST files, offline cache, RoamCache, Outlook Data)
+- Removes protocol handlers (`mailto:`, `outlook:`, `outlookaccounts:`)
+- Removes Outlook-related scheduled tasks and telemetry
+- Blocks silent reinstallation
 
 ---
 
